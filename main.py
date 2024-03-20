@@ -2,19 +2,31 @@ import random, time
 import tabulate
 
 def ssort(L):
-    ### selection sort
-    if (len(L) == 1):
-        return(L)
-    else:
-        m = L.index(min(L))
-        print('selecting minimum %s' % L[m])       
-        L[0], L[m] = L[m], L[0]
-        print('recursively sorting L=%s\n' % L[1:])
-        return [L[0]] + selection_sort(L[1:])
-        
+  ### selection sort
+  if len(L) == 1:
+      return L
+  else:
+      m = L.index(min(L))
+      print(f'selecting minimum {L[m]}')       
+      L[0], L[m] = L[m], L[0]
+      print(f'recursively sorting L={L[1:]}')
+      return [L[0]] + ssort(L[1:])
+    
 def qsort(a, pivot_fn):
-    ## TO DO
-    pass
+  if len(a) <= 1:
+    return a
+  else:
+    pivot = pivot_fn(a)
+    less = [x for x in a if x < pivot]
+    greater = [x for x in a if x > pivot]
+    equal = [x for x in a if x == pivot]
+    return qsort(less, pivot_fn) + equal + qsort(greater, pivot_fn)
+
+def first_element_pivot(a):
+    return a[0]
+
+def random_pivot(a):
+    return random.choice(a)
     
 def time_search(sort_fn, mylist):
     """
